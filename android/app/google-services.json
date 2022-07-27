@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "549626923649",
+    "project_id": "yuru-kazan-app",
+    "storage_bucket": "yuru-kazan-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549626923649:android:960d968ba9aeadc22c5b80",
+        "android_client_info": {
+          "package_name": "com.example.yuru_kazan_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549626923649-cg6hvrahbu8bpgf3rv051psaf2o9ked1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqwZjQjN87wsfCf1SOEzAPnKZulu_XctE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549626923649-cg6hvrahbu8bpgf3rv051psaf2o9ked1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
