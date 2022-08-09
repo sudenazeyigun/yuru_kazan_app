@@ -53,7 +53,9 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                       hintText: "Ad",
                       labelText: "Ad",
                       border: OutlineInputBorder(),
+                      
                     ),
+                    
                   ),
                   SizedBox(height: 8),
                   TextFormField(
@@ -117,6 +119,28 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                                         EmailPasswordLoginPage()));
                           });
                         }
+                        if (_nameController.text.isEmpty) {
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Ad kısmı boş bırakılamaz!",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 3,
+                              backgroundColor: Colors.blueGrey,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
+                         if (_surnameController.text.isEmpty) {
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Soyad kısmı boş bırakılamaz",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 3,
+                              backgroundColor: Colors.blueGrey,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
                         if (!_emailController.text.contains('@')) {
                           Fluttertoast.showToast(
                               msg:
@@ -138,6 +162,7 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                               textColor: Colors.white,
                               fontSize: 16.0);
                         }
+                        
                       },
                       child: Text(
                         "Kayıt Ol",
