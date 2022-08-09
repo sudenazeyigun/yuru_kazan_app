@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "549626923649",
+    "firebase_url": "https://yuru-kazan-app-default-rtdb.firebaseio.com",
     "project_id": "yuru-kazan-app",
     "storage_bucket": "yuru-kazan-app.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "549626923649-24hqjrsges6dfk5bjevcuk3s3b6hd935.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yuru_kazan_app",
+            "certificate_hash": "cf6a208e952782ddd6e606762cec641efab03f9f"
+          }
+        },
         {
           "client_id": "549626923649-cg6hvrahbu8bpgf3rv051psaf2o9ked1.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +38,13 @@
             {
               "client_id": "549626923649-cg6hvrahbu8bpgf3rv051psaf2o9ked1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "549626923649-asjcef5nlulbe9tmktii6qnnf5en37o8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yuruKazanApp"
+              }
             }
           ]
         }
