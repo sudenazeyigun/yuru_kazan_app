@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:yuru_kazan_app/app30.dart';
 import 'package:yuru_kazan_app/email_login.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -20,34 +21,29 @@ class Home extends StatelessWidget {
       body: PageView(
         children: [
           Container(
-              color: Colors.white10,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Kişisel Bilgiler " ,
-                    textAlign: TextAlign.center,
-                    
-                  ),
-                   SizedBox(
-                    height: 10,
-                  ),
-                  Text("${user.email}")
-                ],
-                
-
-              )
-              ),
-
-
-
-
-
-
-
-
+            color: Colors.white10,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Kişisel Bilgiler ",
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("${user.email}"),
+                RaisedButton(onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyHomePage()));
+                })
+              ],
+            ),
+          ),
           Container(
             color: Colors.teal,
             child: Center(child: Text("Geçmiş Aktiviteler Sayfası")),
