@@ -94,7 +94,7 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.blue,
                     child: FlatButton(
-                      
+                    //sss  
                       minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
                       onPressed: () {
