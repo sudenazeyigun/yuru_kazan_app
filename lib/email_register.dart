@@ -12,7 +12,6 @@ import 'package:yuru_kazan_app/home.dart';
 
 class EmailPasswordRegisterPage extends StatefulWidget {
   EmailPasswordRegisterPage({Key? key}) : super(key: key);
-
   @override
   State<EmailPasswordRegisterPage> createState() =>
       _EmailPasswordRegisterPageState();
@@ -53,9 +52,7 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                       hintText: "Ad",
                       labelText: "Ad",
                       border: OutlineInputBorder(),
-                      
                     ),
-                    
                   ),
                   SizedBox(height: 8),
                   TextFormField(
@@ -96,44 +93,33 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                     elevation: 5.0,
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.blue,
-                    child: MaterialButton(
+                    child: FlatButton(
+                      
                       minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
                       onPressed: () {
                         var check = false;
-                        check = _userModel.emailSifreKontrol(
+                        check = _userModel.emailSifreKontrolRegister(
                             _emailController.text,
-                            _passwordController.text); //true
-                        if (check) {
-                          _authService
-                              .createPerson(
-                                  _nameController.text,
-                                  _surnameController.text,
-                                  _emailController.text,
-                                  _passwordController.text)
-                              .then((value) {
-                            return Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        EmailPasswordLoginPage()));
-                          });
-                        }
+                            _passwordController.text,
+                            _nameController.text,
+                            _surnameController.text); //true
+
                         if (_nameController.text.isEmpty) {
+                          
                           Fluttertoast.showToast(
-                              msg:
-                                  "Ad kısmı boş bırakılamaz!",
+                              msg: "Ad kısmı boş bırakılamaz!",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 3,
                               backgroundColor: Colors.blueGrey,
                               textColor: Colors.white,
                               fontSize: 16.0);
+                               onPressed() => {};
                         }
-                         if (_surnameController.text.isEmpty) {
+                        if (_surnameController.text.isEmpty) {
                           Fluttertoast.showToast(
-                              msg:
-                                  "Soyad kısmı boş bırakılamaz",
+                              msg: "Soyad kısmı boş bırakılamaz",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 3,
@@ -162,7 +148,22 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                               textColor: Colors.white,
                               fontSize: 16.0);
                         }
-                        
+
+                        if (check) {
+                          _authService
+                              .createPerson(
+                                  _nameController.text,
+                                  _surnameController.text,
+                                  _emailController.text,
+                                  _passwordController.text)
+                              .then((value) {
+                            return Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EmailPasswordLoginPage()));
+                          });
+                        }
                       },
                       child: Text(
                         "Kayıt Ol",

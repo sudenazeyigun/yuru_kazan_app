@@ -6,6 +6,12 @@ import 'package:flutter/cupertino.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  
+void inputData() {
+  final User? user = _auth.currentUser;
+  final uid = user?.uid;
+  // here you write the codes to input the data into firestore
+}
 
 //Giriş yap fonk
   Future<User?> signIn(String email, String password) async {
@@ -32,6 +38,7 @@ class AuthService {
     } catch (e) {
       debugPrint(e.toString());
     }
-    
   }
+
+ 
 }
