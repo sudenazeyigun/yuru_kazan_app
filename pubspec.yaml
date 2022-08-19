@@ -59,7 +59,6 @@ dependencies:
   flutter_speed_dial: ^6.0.0
   google_directions_api: ^0.9.1
   geolocator: ^9.0.1
-
   
 dev_dependencies:
   flutter_test:

@@ -43,7 +43,7 @@ class Home extends StatelessWidget {
                 ),
                 Icon(
                   Icons.admin_panel_settings,
-                  size: 60,
+                  size: 80,
                   color: Colors.black,
                 ),
                 SizedBox(
@@ -59,12 +59,14 @@ class Home extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => GooglePolylines()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GooglePolylines()));
                   },
                   child: Text("Yeni Aktivite Başlat",
                       style: (TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 15))),
+                          fontWeight: FontWeight.normal, fontSize: 20))),
                 ),
                 SizedBox(
                   height: 20,
@@ -77,17 +79,20 @@ class Home extends StatelessWidget {
                   },
                   child: Text("Geçmiş Aktivitelerim",
                       style: (TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 14.5))),
+                          fontWeight: FontWeight.normal, fontSize: 19))),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 380,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    auth.signOut();
-                  },
-                  child: Text("Çıkış Yap"),
-                ),
+               ElevatedButton.icon(
+                      onPressed: (){
+                        
+                      }, 
+                      icon: Icon(Icons.logout),  
+                      label:  Text("Çıkış Yap", style: (TextStyle(fontSize: 20)),), 
+                      style: ElevatedButton.styleFrom(
+                         primary: Colors.blueAccent 
+                      ),)
               ],
             ),
           ),
@@ -100,7 +105,7 @@ class Home extends StatelessWidget {
                 ),
                 Icon(
                   Icons.location_on,
-                  size: 50,
+                  size: 60,
                 ),
                 SizedBox(
                   height: 10,
@@ -115,17 +120,21 @@ class Home extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    FloatingActionButton(
-                      onPressed: () {
-                        pageController.animateToPage(0,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.easeInCubic);
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios_new_sharp,
-                        color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          pageController.animateToPage(0,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeInCubic);
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios_new_sharp,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        backgroundColor: Colors.blue,
                       ),
-                      backgroundColor: Colors.blue,
                     ),
                   ],
                 ),
