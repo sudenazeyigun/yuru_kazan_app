@@ -7,6 +7,10 @@ import 'package:yuru_kazan_app/email_login.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:yuru_kazan_app/screens/mainn.dart';
+
+import 'components/order_traking_page.dart';
+
 class Home extends StatelessWidget {
   const Home({Key? key, required this.user}) : super(key: key);
   final User user;
@@ -39,7 +43,7 @@ class Home extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MyHomePage()));
+                          builder: (context) => GooglePolylines()));
                 })
               ],
             ),

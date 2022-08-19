@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.yuru_kazan_app">
+       <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+       <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> 
    <application
         android:label="yuru_kazan_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyDt9sKG5oD7UqoFxmFYX6MFKWBfdVOAtiE"/>
+                android:value="AIzaSyDN63qst3lpQ6S65Q7z2vSXAX88isaqAHU"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -18,6 +20,7 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
+                 
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"

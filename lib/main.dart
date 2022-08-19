@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:yuru_kazan_app/main.dart';
 import 'package:yuru_kazan_app/sign_in_page.dart';
 import 'package:yuru_kazan_app/splash_screen.dart';
