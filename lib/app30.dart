@@ -1,118 +1,177 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
-class MyApp extends StatelessWidget {
+class Maps extends StatefulWidget {
+  double latitude, longitude;
+
+  // ignore: use_key_in_widget_constructors
+  Maps({required this.latitude, required this.longitude});
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+  _MapsState createState() => _MapsState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+class _MapsState extends State<Maps> {
+  final Set<Polyline> polyline = {};
 
-class _MyHomePageState extends State<MyHomePage> {
-  GoogleMapController? controller;
+  String google_api_key = "AIzaSyDRXFXG3TkkP2It1Kf2TCSl6KTPutNzbWM";
+  GoogleMapController? _controller;
 
-  final CameraPosition initialPosition =
-      const CameraPosition(target: LatLng(39.8866325, 32.7671915), zoom: 14);
-  var typemap = MapType.normal;
-  var cordinate1 = 'cordinate';
-  var lat = 39.8866325;
-  var long = 32.7671915;
+  static const LatLng sourceLocation = LatLng(39.8927, 32.8152);
+  static const LatLng destination = LatLng(39.8890, 32.8161);
 
-  var address = '';
-  var options = [
-    MapType.normal,
-  ];
-  Future<void> getAddress(latt, longg) async {
-    List<Placemark> placemark = await placemarkFromCoordinates(latt, longg);
-    print(
-        '-----------------------------------------------------------------------------------------');
-    print(placemark);
-    print(
-        '-----------------------------------------------------------------------------------------');
-    Placemark place = placemark[0];
-    setState(() {
-      address =
-          '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+  List<LatLng> polylineCoordinates = [];
+  LocationData? currentLocation;
+
+  void getCurrentLocation() {
+    Location location = Location();
+
+    location.getLocation().then((location2) {
+      currentLocation = location2;
+    });
+
+    location.onLocationChanged.listen((newLoc) {
+      currentLocation = newLoc;
+
+      setState(() {});
     });
   }
 
+  void getPolylines() async {
+    PolylinePoints polylinePoints = PolylinePoints();
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      google_api_key,
+      PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+      PointLatLng(destination.latitude, destination.longitude),
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach(
+        (PointLatLng point) => polylineCoordinates.add(
+          LatLng(point.latitude, point.longitude),
+        ),
+      );
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    getCurrentLocation();
+    getPolylines();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        actions: [],
-      ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            myLocationEnabled: true,
-            myLocationButtonEnabled: true,
-            markers: {
-              const Marker(
-                markerId: MarkerId('asdasd'),
-                position: LatLng(39.8866325, 32.7671915),
+        title: Text(
+          'Tarih gelecek',
+        ),
+      ) ,
+      body:Container(
+         color :Color.fromARGB(57, 3, 168, 244),
+        child: Column(
+          
+          children: [
+            Container(//Map's ConTainer
+            padding: EdgeInsets.only(bottom:8),
+              height: _size.height /2,
+              width: _size.width,
+              decoration: BoxDecoration(
+                        
               ),
-            },
-            initialCameraPosition: initialPosition,
-            mapType: typemap,
-            onMapCreated: (controller) {
-              setState(() {
-                controller = controller;
-              });
-            },
-            onTap: (cordinate) {
-              setState(() {
-                lat = cordinate.latitude;
-                long = cordinate.longitude;
-                getAddress(lat, long);
-
-                cordinate1 = cordinate.toString();
-              });
-            },
-          ),
-          Positioned(
-            left: 5,
-            bottom: 150,
-            child: Text(
-              cordinate1,
-              softWrap: false,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 15,
-            bottom: 100,
-            child: Container(
-              width: 200,
-              child: Text(
-                address,
-                softWrap: true,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target:LatLng(39,34) ,
+                  zoom: 5
                 ),
               ),
+              ),
+            
+            Container(//Details Container
+            
+            
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(width: _size.width/22,),
+                      Container(//Toplam Mesafe
+                     
+                      height: _size.height/4,
+                      width: _size.width*6/22,
+                     decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 246, 246, 245),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40)
+                          ),
+                        )
+                      ),
+                      SizedBox(width: _size.width/22,),
+                      Container(//ort hız
+                    
+                        height: _size.height/4,
+                        width: _size.width*6/22,
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 246, 246, 245),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40)
+                          ),
+                        )
+                      ),
+                      SizedBox(width: _size.width/22,),
+                      Container(
+                       
+                        height: _size.height/4,
+                        width: _size.width*6/22,
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 246, 246, 245),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40)
+                          ),
+                        )
+                       
+                      ),
+                      SizedBox(width: _size.width/22,),
+                    ],
+                  ),
+              ]),
             ),
-          ),
-        ],
-      ),
+            SizedBox(height: 10,),
+            Container(//Button Container
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                    
+                    }, 
+                    child: const Text(
+                      'BAŞLAT',
+                      ),
+                  ),
+                  SizedBox(width: _size.width/2,),
+                  ElevatedButton(
+                    onPressed: () {
+                    
+                    }, 
+                    child: const Text(
+                      'BİTİR',
+                    ),
+                  )
+                ],  
+              ),
+            )
+          ],
+        ),
+      )  
     );
   }
 }

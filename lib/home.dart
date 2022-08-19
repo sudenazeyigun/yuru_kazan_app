@@ -7,6 +7,9 @@ import 'package:yuru_kazan_app/app30.dart';
 import 'package:yuru_kazan_app/email_login.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:yuru_kazan_app/sign_in_page.dart';
+
+import 'components/order_traking_page.dart';
 
 class Home extends StatelessWidget {
   PageController pageController = PageController(initialPage: 0);
@@ -57,7 +60,7 @@ class Home extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyHomePage()));
+                        MaterialPageRoute(builder: (context) => GooglePolylines()));
                   },
                   child: Text("Yeni Aktivite Başlat",
                       style: (TextStyle(
@@ -66,20 +69,25 @@ class Home extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                 ElevatedButton(
+                ElevatedButton(
                   onPressed: () {
                     pageController.animateToPage(2,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.easeInCubic);
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInCubic);
                   },
                   child: Text("Geçmiş Aktivitelerim",
                       style: (TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 14.5))),
                 ),
                 SizedBox(
-                  height: 450,
+                  height: 300,
                 ),
-               
+                ElevatedButton(
+                  onPressed: () {
+                    auth.signOut();
+                  },
+                  child: Text("Çıkış Yap"),
+                ),
               ],
             ),
           ),
@@ -102,7 +110,7 @@ class Home extends StatelessWidget {
                   style: (TextStyle(fontSize: 15)),
                 ),
                 SizedBox(
-                  height: 550,
+                  height: 500,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -113,7 +121,10 @@ class Home extends StatelessWidget {
                             duration: Duration(milliseconds: 500),
                             curve: Curves.easeInCubic);
                       },
-                      child: Icon(Icons.arrow_back_ios_new_sharp, color: Colors.white,),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_sharp,
+                        color: Colors.white,
+                      ),
                       backgroundColor: Colors.blue,
                     ),
                   ],
