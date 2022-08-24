@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +27,8 @@ class _EmailPasswordLoginPageState extends State<EmailPasswordLoginPage> {
   FirebaseAuth auth = FirebaseAuth.instance;
   AuthService _authService = AuthService();
   User? user;
+  bool? isLogin = false;
+
   @override
   Widget build(BuildContext context) {
     future:
@@ -78,8 +79,14 @@ class _EmailPasswordLoginPageState extends State<EmailPasswordLoginPage> {
                     child: FlatButton(
                       minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
-                      onPressed: () {
-                        var check = false;
+                      onPressed: () async {
+                        var check = true;
+
+                        print("objectttt");
+                        if (check == true) {
+                          await signinmethod();
+                        }
+
                         check = _userModel.emailSifreKontrolLogin(
                             _emailController.text, _passwordController.text);
                         if (_emailController.text.isEmpty) {
@@ -94,21 +101,13 @@ class _EmailPasswordLoginPageState extends State<EmailPasswordLoginPage> {
                         }
                         if (_passwordController.text.isEmpty) {
                           Fluttertoast.showToast(
-                              msg: "Şifre kısmı boş bırakılamaz",
+                              msg: "Şifre kısmı boş bırakılamaz!",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 3,
                               backgroundColor: Colors.blueGrey,
                               textColor: Colors.white,
                               fontSize: 16.0);
-                        }
-                        if (check) {
-                          signinmethod();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Home(user: user!),
-                              ));
                         }
                       },
                       child: Text(
@@ -119,7 +118,6 @@ class _EmailPasswordLoginPageState extends State<EmailPasswordLoginPage> {
                       ),
                     ),
                   ),
-                  
                 ],
               ),
             )),
@@ -127,10 +125,24 @@ class _EmailPasswordLoginPageState extends State<EmailPasswordLoginPage> {
     );
   }
 
-  void signinmethod() {
-    _authService
-        .signIn(_emailController.text, _passwordController.text)
-        .then((value) {});
+  Future signinmethod() async {
+    print("xcgfdfsdfdsfsd");
+    try {
+      await auth.signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => Home(user: user!)));
+    } on FirebaseException catch (e) {
+      Fluttertoast.showToast(
+          msg: "Email veya şifre hatalı!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.blueGrey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+
     user = auth.currentUser;
   }
 }

@@ -22,87 +22,114 @@ class GooglePolyline extends State<GooglePolylines> {
   Set<Polyline> _polyLines = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
+  late LocationData currentLocation;
+  late LocationData destinationLocation;
+  late Future<Position> position;
+  late Location location;
+  late StreamSubscription<LocationData> subscription;
   String googleAPiKey = "AIzaSyDN63qst3lpQ6S65Q7z2vSXAX88isaqAHU";
   static const CameraPosition initialCameraPosition =
       CameraPosition(target: LatLng(38.963745, 35.243322), zoom: 5);
   Set<Marker> markers = {};
 
-  static get locationSettings => null;
+  void getCurrentLocation() {
+    location = Location();
+    position = Geolocator.getCurrentPosition();
 
+    location.onLocationChanged.listen((clocation) {
+      currentLocation = clocation;
+      locatio(currentLocation);
+    });
+
+    location.onLocationChanged.listen((l) {
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(l.latitude!, l.longitude!), zoom: 16),
+        ),
+      );
+    });
+  }
+
+  void locatio(LocationData location) {
+    markers.add(Marker(
+        markerId: const MarkerId('current'),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        position: LatLng(location.latitude!, location.longitude!)));
+
+    setState(() {
+      getCurrentLocation();
+    });
+  }
+
+  static get locationSettings => null;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    getCurrentLocation();
     polylinePoints = PolylinePoints();
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     GeoLocations carcurt = GeoLocations();
     return SafeArea(
         child: Scaffold(
-            body: Stack(
-              children: [
-                GoogleMap(
-                  initialCameraPosition: initialCameraPosition,
-                  markers: markers,
-                  mapType: MapType.normal,
-                  onMapCreated: (GoogleMapController controller) {
-                    googleMapController = controller;
-                    setPolyLines();
-                  },
-                  polylines: _polyLines,
-                ),
-              ],
-            ),
-            floatingActionButton:
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: SpeedDial (
-                backgroundColor: Colors.black,
-                animatedIcon: AnimatedIcons.menu_arrow,
-                children: [
-                  SpeedDialChild(
-                      child: Icon(Icons.location_on),
-                      label: "Başla",
-                      onTap: () async {
-                        Position? position =
-                            await Geolocator.getCurrentPosition();
+      body: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: initialCameraPosition,
+            markers: markers,
+            mapType: MapType.normal,
+            onMapCreated: (GoogleMapController controller) {
+              googleMapController = controller;
 
-                        googleMapController.animateCamera(
-                            CameraUpdate.newCameraPosition(CameraPosition(
-                                target:
-                                    LatLng(position.latitude, position.longitude),
-                                zoom: 14)));
-
-                        markers.clear();
-
-                        markers.add(Marker(
-                            markerId: const MarkerId('currentLocation'),
-                            position:
-                                LatLng(position.latitude, position.longitude)));
-                        markers.add(Marker(
-                            markerId: const MarkerId('positionStream '),
-                            position:
-                                LatLng(position.latitude, position.longitude)));
-                        markers.add(Marker(
-                            markerId: const MarkerId('value'),
-                            position:
-                                LatLng(position.latitude, position.longitude)));
-
-                        setState(() {});
-                      }),
-                  SpeedDialChild(
-                      child: Icon(Icons.location_off),
-                      label: "Bitir",
-                      onTap: () {})
-                ],
-              ),
+              setPolyLines();
+            },
+            polylines: _polyLines,
           ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            
-            
-            ));
+        ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 40),
+        child: SpeedDial(
+          backgroundColor: Colors.black,
+          animatedIcon: AnimatedIcons.menu_arrow,
+          children: [
+            SpeedDialChild(
+                child: Icon(Icons.location_on),
+                label: "Başla",
+                onTap: () async {
+                  // Position? position = await Geolocator.getCurrentPosition();
+
+                  markers.clear();
+
+                  markers.add(Marker(
+                      markerId: const MarkerId('source'),
+                      position: LatLng(currentLocation.latitude!,
+                          currentLocation.longitude!)));
+                  markers.add(Marker(
+                      markerId: const MarkerId('current'),
+                      icon: BitmapDescriptor.defaultMarkerWithHue(
+                          BitmapDescriptor.hueBlue),
+                      position: LatLng(currentLocation.latitude!,
+                          currentLocation.longitude!)));
+                  markers.add(Marker(
+                      markerId: const MarkerId('destination'),
+                      position: LatLng(39.8890, 32.8157)));
+
+                  setState(() {});
+                }),
+            SpeedDialChild(
+                child: Icon(Icons.location_off), label: "Bitir", onTap: () {
+
+                  
+                })
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+    ));
   }
 
   Future<Position> _determinePosition() async {
@@ -143,7 +170,7 @@ class GooglePolyline extends State<GooglePolylines> {
       googleAPiKey,
       PointLatLng(_originLatitude, _originLongitude),
       PointLatLng(_destLatitude, _destLongitude),
-      travelMode: TravelMode.driving,
+      travelMode: TravelMode.walking,
     );
 
     if (result.status == 'OK') {
