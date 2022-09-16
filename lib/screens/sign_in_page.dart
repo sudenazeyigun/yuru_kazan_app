@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuru_kazan_app/email_login.dart';
-import 'package:yuru_kazan_app/email_register.dart';
+import 'package:yuru_kazan_app/screens/email_login.dart';
+import 'package:yuru_kazan_app/screens/email_register.dart';
 import 'package:yuru_kazan_app/main.dart';
 // ignore_for_file: prefer_const_constructors
 
@@ -55,22 +55,7 @@ class SignInPage extends StatelessWidget {
               height: 8,
             ),
 
-            //Google Oturum Butonu
-            /*RaisedButton(
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: Text(
-                "Google İle Oturum Aç",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.blue,
-            ), */
-
-            //Email Oturum Butonu
+           
             RaisedButton(
               onPressed: ()=> _emailVeSifreIleGiris(context) ,
               shape: RoundedRectangleBorder(

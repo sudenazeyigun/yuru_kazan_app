@@ -2,7 +2,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:yuru_kazan_app/main.dart';
-import 'package:yuru_kazan_app/sign_in_page.dart';
+import 'package:yuru_kazan_app/screens/sign_in_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 void main() {

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:yuru_kazan_app/email_login.dart';
+import 'package:yuru_kazan_app/screens/email_login.dart';
 
 class UserModel {
   final FirebaseAuth _auth = FirebaseAuth.instance;

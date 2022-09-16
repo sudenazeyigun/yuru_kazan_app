@@ -3,12 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:yuru_kazan_app/auth.dart';
-import 'package:yuru_kazan_app/email_login.dart';
-import 'package:yuru_kazan_app/sign_in_page.dart';
-import 'firebase_options.dart';
-import 'package:yuru_kazan_app/user_model.dart';
-import 'package:yuru_kazan_app/home.dart';
+import 'package:yuru_kazan_app/screens/email_login.dart';
+import 'package:yuru_kazan_app/services/auth_service.dart';
+import 'package:yuru_kazan_app/screens/sign_in_page.dart';
+import '../map/firebase_options.dart';
+import 'package:yuru_kazan_app/model/user_model.dart';
+import 'package:yuru_kazan_app/screens/home.dart';
 
 class EmailPasswordRegisterPage extends StatefulWidget {
   EmailPasswordRegisterPage({Key? key}) : super(key: key);
@@ -94,7 +94,6 @@ class _EmailPasswordRegisterPageState extends State<EmailPasswordRegisterPage> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.blue,
                     child: FlatButton(
-                    //sss  
                       minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
                       onPressed: () {

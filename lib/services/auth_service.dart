@@ -7,6 +7,24 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  void inputData() {
+    final User? user = _auth.currentUser;
+    final uid = user?.uid;
+  }
+
+   Future<User?> createPerson(
+      String ad, String soyad, String email, String password) async {
+    try {
+      var user = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      await _firestore.collection("Person").doc(user.user?.uid).set(
+          {"name": ad, "surname": soyad, "email": email, "password": password});
+      return user.user;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
 //Giriş yap fonk
   Future<User?> signIn(String email, String password) async {
     var user = await _auth.signInWithEmailAndPassword(
@@ -21,17 +39,5 @@ class AuthService {
 
   //Kayıt Ol Fonk
 
-  Future<User?> createPerson(
-      String ad, String soyad, String email, String password) async {
-    try {
-      var user = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      await _firestore.collection("Person").doc(user.user?.uid).set(
-          {"name": ad, "surname": soyad, "email": email, "password": password});
-      return user.user;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    
-  }
+ 
 }

@@ -2,11 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yuru_kazan_app/auth.dart';
-import 'package:yuru_kazan_app/home.dart';
-import 'package:yuru_kazan_app/user_model.dart';
-import 'firebase_options.dart';
+import 'package:yuru_kazan_app/map/order_traking_page.dart';
+import 'package:yuru_kazan_app/screens/home.dart';
+import 'package:yuru_kazan_app/services/auth_service.dart';
+import 'package:yuru_kazan_app/model/user_model.dart';
+import '../map/firebase_options.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -82,7 +84,6 @@ class _EmailPasswordLoginPageState extends State<EmailPasswordLoginPage> {
                       onPressed: () async {
                         var check = true;
 
-                        print("objectttt");
                         if (check == true) {
                           await signinmethod();
                         }
@@ -126,7 +127,6 @@ class _EmailPasswordLoginPageState extends State<EmailPasswordLoginPage> {
   }
 
   Future signinmethod() async {
-    print("xcgfdfsdfdsfsd");
     try {
       await auth.signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
