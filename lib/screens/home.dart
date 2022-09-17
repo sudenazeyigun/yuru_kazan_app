@@ -53,7 +53,6 @@ class _HomeState extends State<Home> {
   late GoogleMapController googleMapController;
 
   double total = 0.0;
-  late double totalKm;
   double totalSecond = 0.0;
   double totalMinute = 0.0;
   double totalHour = 0.0;
@@ -63,13 +62,21 @@ class _HomeState extends State<Home> {
 
   late PolylinePoints polylinePoints;
 
-  double getTotalDistance() {
+ 
+
+  @override
+  void initState() {
+    super.initState();
+     double getTotalDistance() {
     db.collection("Activity").get().then((querySnapshot) {
-      for (int i = 0; i <querySnapshot.size; i++) {
+      for (int i = 0; i < querySnapshot.size; i++) {
         total = total + querySnapshot.docs[i].get("distance");
       }
     });
     return total;
+    setState(() {
+      
+    });
   }
 
   double getTotalTime() {
@@ -84,18 +91,12 @@ class _HomeState extends State<Home> {
         totalHour = totalHour + querySnapshot.docs[k].get("hour");
       }
     });
-    inspect(totalSecond);
-    inspect(totalMinute);
-    inspect(totalHour);
 
-    totalTime = (totalHour + totalMinute / 60 + totalSecond / 3600);
-    
     return totalTime;
+    setState(() {
+      
+    });
   }
-
-  @override
-  void initState() {
-    super.initState();
     getTotalDistance();
     getTotalTime();
   }
@@ -230,13 +231,16 @@ class _HomeState extends State<Home> {
                               ),
                               Container(
                                 width: 150,
-                                height: 80,
+                                height: 95,
                                 decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
                                     color: Colors.grey),
                                 child: Column(
                                   children: [
+                                    SizedBox(
+                                      height: 13,
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -255,7 +259,9 @@ class _HomeState extends State<Home> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(total.toString() + " " + "m"),
+                                        Text((total / 1000).toString() +
+                                            " " +
+                                            "km"),
                                       ],
                                     )
                                   ],
@@ -266,7 +272,7 @@ class _HomeState extends State<Home> {
                               ),
                               Container(
                                 width: 150,
-                                height: 80,
+                                height: 95,
                                 decoration: BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
@@ -291,7 +297,14 @@ class _HomeState extends State<Home> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(totalTime.toString()),
+                                        Text(totalHour.toString() +
+                                            "saat " +
+                                            "\n" +
+                                            (totalMinute).toString() +
+                                            "dakika" +
+                                            "\n" +
+                                            (totalSecond).toString() +
+                                            "saniye"),
                                       ],
                                     )
                                   ],
